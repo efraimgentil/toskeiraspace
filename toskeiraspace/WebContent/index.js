@@ -4,8 +4,8 @@
 
 var c = document.getElementById("c");
 
+// the reaking global
 var player = {
-	angle : 0,
 	click : {
 		x : 400,
 		y : 300
@@ -17,55 +17,97 @@ var player = {
 	target : null
 };
 
-function makeBullet(sx, sy, px, py) {
-	var bullet = {
-		x : sx,
-		y : sy,
-		dx : px,
-		dy : py,
-		color : "cyan",
-		angle : ship.angle + Math.PI / 2,
-		step : function() {
-			var mx = this.dx - this.x;
-			var my = this.dy - this.y;
-			if (mx > 5)
-				this.x += 0.7;
-			else if (mx < -5)
-				this.x -= 0.7;
-			if (my > 5)
-				this.y += 0.7;
-			else if (my < -5)
-				this.y -= 0.7;
-		},
-		draw : function(ctx) {
-			ctx.strokeStyle = this.color;
-			ctx.translate(this.x, this.y);
-			ctx.rotate(this.angle);
-			ctx.beginPath();
-			ctx.moveTo(0, 0);
-			ctx.arc(0, 0, 4, 0, Math.PI * 2, false);
-			ctx.stroke();
+// basic class
+function Sprite(p) {
+	if (!p)
+		p = {};
+	this.angle = p.angle || 0.7;
+	this.x = p.x || 400;
+	this.y = p.y || 300;
+	this.color = p.color || "white";
 
-		}
+	this.mouseover = function() {
+		var x = player.move.x - this.x;
+		var y = player.move.y - this.y;
+		return Math.sqrt(x * x + y * y) < 15;
 	};
-	return bullet;
 }
 
-var bullets = [];
+function Rock(p) {
+	Sprite.call(this, p);
+	this.x = Math.random() * 800;
+	this.y = Math.random() * 600;
+	this.points = [ {
+		x : -5 + Math.random() * -2,
+		y : 5 + Math.random() * 3
+	}, {
+		x : 5 + Math.random() * 2,
+		y : 5 + Math.random() * 4
+	}, {
+		x : 5 + Math.random() * 2,
+		y : -5 + Math.random() * -3
+	}, {
+		x : 2 + Math.random() * 2,
+		y : -5 + Math.random() * -3
+	}, {
+		x : -5 + Math.random() * -2.6,
+		y : -5 + Math.random() * -2
+	}, {
+		x : -5 + Math.random() * 2,
+		y : 5 + Math.random() * 2
+	} ];
+	this.angle = Math.random();
+	this.step = function() {
+		this.angle += 0.01;
+	};
+	this.draw = function(ctx) {
+		ctx.strokeStyle = this.color;
+		ctx.translate(this.x, this.y);
+		ctx.rotate(this.angle);
+		ctx.beginPath();
+		ctx.moveTo(0, 0);
+		var i = this.points.length;
+		while (i-- > 0)
+			ctx.lineTo(this.points[i].x, this.points[i].y);
+		ctx.stroke();
+	};
+}
 
-var ship = {
-	x : 400,
-	y : 300,
-	angle : 0,
-	color : "white",
-	openFire : false,
-	step : function() {
+function Bullet(p) {
+	Sprite.call(this, p);
+	this.dx = p.dx;
+	this.dy = p.dy;
+	this.step = function() {
+		var mx = this.dx - this.x;
+		var my = this.dy - this.y;
+		if (mx > 5)
+			this.x += 0.7;
+		else if (mx < -5)
+			this.x -= 0.7;
+		if (my > 5)
+			this.y += 0.7;
+		else if (my < -5)
+			this.y -= 0.7;
+	};
+	this.draw = function(ctx) {
+		ctx.strokeStyle = this.color;
+		ctx.translate(this.x, this.y);
+		ctx.rotate(this.angle);
+		ctx.beginPath();
+		ctx.moveTo(0, 0);
+		ctx.arc(0, 0, 4, 0, Math.PI * 2, false);
+		ctx.stroke();
+	};
+}
+
+function Ship(p) {
+	Sprite.call(this, p);
+	this.openFire = false;
+	this.step = function() {
 		// rotate
 		var x = player.move.x - this.x;
 		var y = player.move.y - this.y;
-		player.angle = Math.atan2(y, x);
-		this.angle = player.angle + Math.PI / 2;
-
+		this.angle = Math.atan2(y, x) + Math.PI / 2;
 		// move (and shoot something maybe)
 		x = player.click.x - this.x;
 		y = player.click.y - this.y;
@@ -76,11 +118,11 @@ var ship = {
 		}
 		if (this.openFire) {
 			this.openFire = false;
-			bullets.push(makeBullet(this.x, this.y, player.click.x,
+			bullets.push(makeBullet(this.x, this.y, this.angle, player.click.x,
 					player.click.y));
 		}
-	},
-	draw : function(ctx) {
+	};
+	this.draw = function(ctx) {
 		ctx.strokeStyle = this.color;
 		ctx.translate(this.x, this.y);
 		ctx.rotate(this.angle);
@@ -91,59 +133,27 @@ var ship = {
 		ctx.lineTo(-10, 5);
 		ctx.lineTo(0, -15);
 		ctx.stroke();
-	},
-	mouseover : function() {
-		var x = player.move.x - this.x;
-		var y = player.move.y - this.y;
-		return Math.sqrt(x * x + y * y) < 15;
-	}
-};
+	};
+
+}
+
+function makeBullet(sx, sy, sa, px, py) {
+	return new Bullet({
+		x : sx,
+		y : sy,
+		dx : px,
+		dy : py,
+		color : "cyan",
+		angle : sa + Math.PI / 2
+	});
+}
+
+var bullets = [];
+
+var ship = new Ship();
 
 function makeRock() {
-	var rock = {
-		x : Math.random() * 800,
-		y : Math.random() * 600,
-		points : [ {
-			x : -5 + Math.random() * -2,
-			y : 5 + Math.random() * 3
-		}, {
-			x : 5 + Math.random() * 2,
-			y : 5 + Math.random() * 4
-		}, {
-			x : 5 + Math.random() * 2,
-			y : -5 + Math.random() * -3
-		}, {
-			x : 2 + Math.random() * 2,
-			y : -5 + Math.random() * -3
-		}, {
-			x : -5 + Math.random() * -2.6,
-			y : -5 + Math.random() * -2
-		}, {
-			x : -5 + Math.random() * 2,
-			y : 5 + Math.random() * 2
-		} ],
-		angle : Math.random(),
-		color : "white",
-		step : function() {
-			this.angle += 0.01;
-		},
-		draw : function(ctx) {
-			ctx.strokeStyle = this.color;
-			ctx.translate(this.x, this.y);
-			ctx.rotate(this.angle);
-			ctx.beginPath();
-			ctx.moveTo(0, 0);
-			var i = this.points.length;
-			while (i-- > 0)
-				ctx.lineTo(this.points[i].x, this.points[i].y);
-			ctx.stroke();
-		},
-		mouseover : function() {
-			var x = player.move.x - this.x;
-			var y = player.move.y - this.y;
-			return Math.sqrt(x * x + y * y) < 25;
-		}
-	};
+	var rock = new Rock();
 	return rock;
 }
 
@@ -211,7 +221,7 @@ c.onmousemove = move;
 var aaa = document.getElementById("aaa");
 
 function dbg() {
-	aaa.innerHTML = JSON.stringify(player);
+	aaa.innerHTML = JSON.stringify(ship);
 }
 
 var ctx = c.getContext("2d");
