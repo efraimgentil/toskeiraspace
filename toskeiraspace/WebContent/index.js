@@ -82,13 +82,13 @@ function Bullet(p) {
 		var mx = this.dx - this.x;
 		var my = this.dy - this.y;
 		if (mx > 5)
-			this.x += 0.7;
+			this.x += 1.1;
 		else if (mx < -5)
-			this.x -= 0.7;
+			this.x -= 1.1;
 		if (my > 5)
-			this.y += 0.7;
+			this.y += 1.1;
 		else if (my < -5)
-			this.y -= 0.7;
+			this.y -= 1.1;
 		else {// stopped
 			var i = bullets.length;
 			while (i--)
