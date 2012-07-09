@@ -20,9 +20,6 @@ canvas {
 }
 
 #aaa,#bbb {
-	position: absolute;
-	top: 5px;
-	left: 820px;
 	width: 300px;
 	border: 1px groove white;
 }

@@ -26,7 +26,7 @@ function Sprite(p) {
 	this.y = p.y || 300;
 	this.color = p.color || "white";
 	this.isDead = false;
-	
+
 	this.mouseover = function() {
 		var x = player.move.x - this.x;
 		var y = player.move.y - this.y;
@@ -79,35 +79,31 @@ function Bullet(p) {
 	this.dx = p.dx;
 	this.dy = p.dy;
 	this.step = function() {
-		if(!this.isDead){
-			var mx = this.dx - this.x;
-			var my = this.dy - this.y;
-			if (mx > 5)
-				this.x += 0.7;
-			else if (mx < -5)
-				this.x -= 0.7;
-			if (my > 5)
-				this.y += 0.7;
-			else if (my < -5)
-				this.y -= 0.7;
-			else {// stopped
-				var i = bullets.length;
-				while (i--)
-					if (bullets[i] == this)
-						this.isDead = true;
-			}
+		var mx = this.dx - this.x;
+		var my = this.dy - this.y;
+		if (mx > 5)
+			this.x += 0.7;
+		else if (mx < -5)
+			this.x -= 0.7;
+		if (my > 5)
+			this.y += 0.7;
+		else if (my < -5)
+			this.y -= 0.7;
+		else {// stopped
+			var i = bullets.length;
+			while (i--)
+				if (bullets[i] == this)
+					this.isDead = true;
 		}
 	};
 	this.draw = function(ctx) {
-		if(!this.isDead){			
-			ctx.strokeStyle = this.color;
-			ctx.translate(this.x, this.y);
-			ctx.rotate(this.angle);
-			ctx.beginPath();
-			ctx.moveTo(0, 0);
-			ctx.arc(0, 0, 4, 0, Math.PI * 2, false);
-			ctx.stroke();
-		}
+		ctx.strokeStyle = this.color;
+		ctx.translate(this.x, this.y);
+		ctx.rotate(this.angle);
+		ctx.beginPath();
+		ctx.moveTo(0, 0);
+		ctx.arc(0, 0, 4, 0, Math.PI * 2, false);
+		ctx.stroke();
 	};
 }
 
@@ -127,10 +123,10 @@ function Ship(p) {
 			this.x += (x > 15 ? 0.7 : x < -15 ? -0.7 : 0);
 			this.y += (y > 15 ? 0.7 : y < -15 ? -0.7 : 0);
 		}
-		if (this.openFire) {
+		if (this.openFire && player.target) {
 			this.openFire = false;
-			bullets.push(makeBullet(this.x, this.y, this.angle, player.click.x,
-					player.click.y));
+			bullets.push(makeBullet(this.x, this.y, this.angle,
+					player.target.x, player.target.y));
 		}
 	};
 	this.draw = function(ctx) {
@@ -174,8 +170,16 @@ while (i--)
 	asteroids.push(makeRock());
 
 function step() {
-	player.target = null;
+	// cleanup first
 	var i = bullets.length;
+	var b2 = [];
+	while (i--)
+		if (!bullets[i].isDead)
+			b2.push(bullets[i]);
+	bullets = b2;
+	player.target = null;
+	// simulation step
+	i = bullets.length;
 	while (i--)
 		bullets[i].step();
 	i = asteroids.length;
@@ -230,11 +234,11 @@ function move(e) {
 c.onmousemove = move;
 
 var aaa = document.getElementById("aaa");
-var aaa = document.getElementById("bbb");
+var bbb = document.getElementById("bbb");
 
 function dbg() {
-	aaa.innerHTML = JSON.stringify(ship);
-	bbb.innerHTML = JSON.stringify(bullets);
+//	aaa.innerHTML = JSON.stringify(ship);
+//	bbb.innerHTML = JSON.stringify(bullets);
 }
 
 var ctx = c.getContext("2d");
