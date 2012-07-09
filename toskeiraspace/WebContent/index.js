@@ -25,7 +25,8 @@ function Sprite(p) {
 	this.x = p.x || 400;
 	this.y = p.y || 300;
 	this.color = p.color || "white";
-
+	this.isDead = false;
+	
 	this.mouseover = function() {
 		var x = player.move.x - this.x;
 		var y = player.move.y - this.y;
@@ -78,25 +79,35 @@ function Bullet(p) {
 	this.dx = p.dx;
 	this.dy = p.dy;
 	this.step = function() {
-		var mx = this.dx - this.x;
-		var my = this.dy - this.y;
-		if (mx > 5)
-			this.x += 0.7;
-		else if (mx < -5)
-			this.x -= 0.7;
-		if (my > 5)
-			this.y += 0.7;
-		else if (my < -5)
-			this.y -= 0.7;
+		if(!this.isDead){
+			var mx = this.dx - this.x;
+			var my = this.dy - this.y;
+			if (mx > 5)
+				this.x += 0.7;
+			else if (mx < -5)
+				this.x -= 0.7;
+			if (my > 5)
+				this.y += 0.7;
+			else if (my < -5)
+				this.y -= 0.7;
+			else {// stopped
+				var i = bullets.length;
+				while (i--)
+					if (bullets[i] == this)
+						this.isDead = true;
+			}
+		}
 	};
 	this.draw = function(ctx) {
-		ctx.strokeStyle = this.color;
-		ctx.translate(this.x, this.y);
-		ctx.rotate(this.angle);
-		ctx.beginPath();
-		ctx.moveTo(0, 0);
-		ctx.arc(0, 0, 4, 0, Math.PI * 2, false);
-		ctx.stroke();
+		if(!this.isDead){			
+			ctx.strokeStyle = this.color;
+			ctx.translate(this.x, this.y);
+			ctx.rotate(this.angle);
+			ctx.beginPath();
+			ctx.moveTo(0, 0);
+			ctx.arc(0, 0, 4, 0, Math.PI * 2, false);
+			ctx.stroke();
+		}
 	};
 }
 
@@ -219,9 +230,11 @@ function move(e) {
 c.onmousemove = move;
 
 var aaa = document.getElementById("aaa");
+var aaa = document.getElementById("bbb");
 
 function dbg() {
 	aaa.innerHTML = JSON.stringify(ship);
+	bbb.innerHTML = JSON.stringify(bullets);
 }
 
 var ctx = c.getContext("2d");

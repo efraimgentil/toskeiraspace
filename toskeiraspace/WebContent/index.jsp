@@ -19,7 +19,7 @@ canvas {
 	left: 15px;
 }
 
-#aaa {
+#aaa,#bbb {
 	position: absolute;
 	top: 5px;
 	left: 820px;
@@ -31,6 +31,7 @@ canvas {
 <body>
 	<canvas id="c" width="800" height="600"></canvas>
 	<div id="aaa"></div>
+	<div id="bbb"></div>
 	<script type="text/javascript" src="index.js"></script>
 </body>
 </html>
