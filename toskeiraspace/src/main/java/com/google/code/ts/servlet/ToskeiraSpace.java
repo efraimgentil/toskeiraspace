@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServlet;
 
 /**
  * Servlet class ToskeiraServlet.
- * 
+ *
  * @author Leonardo Silveira
  * @author Helio Frota
  *
@@ -14,6 +14,6 @@ import javax.servlet.http.HttpServlet;
 @SuppressWarnings("serial")
 public class ToskeiraSpace extends HttpServlet {
 
-	
-	
+
+
 }
