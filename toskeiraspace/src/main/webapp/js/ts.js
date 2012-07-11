@@ -4,7 +4,7 @@
 
 var c = document.getElementById("c");
 
-// the reaking global
+// the freaking global
 var player = {
 	click : {
 		x : 400,
@@ -26,7 +26,6 @@ function Sprite(p) {
 	this.y = p.y || 300;
 	this.color = p.color || "white";
 	this.isDead = false;
-
 	this.mouseover = function() {
 		var x = player.move.x - this.x;
 		var y = player.move.y - this.y;
@@ -34,6 +33,7 @@ function Sprite(p) {
 	};
 }
 
+// the floating rock
 function Rock(p) {
 	Sprite.call(this, p);
 	this.x = Math.random() * 800;
@@ -74,27 +74,35 @@ function Rock(p) {
 	};
 }
 
+// fancy bullet to fire
 function Bullet(p) {
 	Sprite.call(this, p);
 	this.dx = p.dx;
 	this.dy = p.dy;
+	this.range = 400;
 	this.step = function() {
 		var mx = this.dx - this.x;
 		var my = this.dy - this.y;
-		if (mx > 5)
+		var stopped = true;
+		if (mx > 5) {
+			stopped = false;
 			this.x += 1.1;
-		else if (mx < -5)
+		} else if (mx < -5) {
+			stopped = false;
 			this.x -= 1.1;
-		if (my > 5)
-			this.y += 1.1;
-		else if (my < -5)
-			this.y -= 1.1;
-		else {// stopped
-			var i = bullets.length;
-			while (i--)
-				if (bullets[i] == this)
-					this.isDead = true;
 		}
+		if (my > 5) {
+			stopped = false;
+			this.y += 1.1;
+		} else if (my < -5) {
+			stopped = false;
+			this.y -= 1.1;
+		}
+		// it does not float forever...
+		if (stopped || this.range < 0)
+			this.isDead = true;
+		else
+			this.range -= 1.1;
 	};
 	this.draw = function(ctx) {
 		ctx.strokeStyle = this.color;
@@ -107,6 +115,7 @@ function Bullet(p) {
 	};
 }
 
+// almighty starship
 function Ship(p) {
 	Sprite.call(this, p);
 	this.openFire = false;
@@ -237,8 +246,8 @@ var aaa = document.getElementById("aaa");
 var bbb = document.getElementById("bbb");
 
 function dbg() {
-//	aaa.innerHTML = JSON.stringify(ship);
-//	bbb.innerHTML = JSON.stringify(bullets);
+	// aaa.innerHTML = JSON.stringify(ship);
+	// bbb.innerHTML = JSON.stringify(bullets);
 }
 
 var ctx = c.getContext("2d");
