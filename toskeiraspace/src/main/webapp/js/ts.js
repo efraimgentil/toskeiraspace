@@ -86,17 +86,17 @@ function Bullet(p) {
 		var stopped = true;
 		if (mx > 5) {
 			stopped = false;
-			this.x += 1.1;
+			this.x += 1.1 * Math.abs(Math.cos(this.angle));
 		} else if (mx < -5) {
 			stopped = false;
-			this.x -= 1.1;
+			this.x -= 1.1 * Math.abs(Math.cos(this.angle));
 		}
 		if (my > 5) {
 			stopped = false;
-			this.y += 1.1;
+			this.y += 1.1 * Math.abs(Math.sin(this.angle));
 		} else if (my < -5) {
 			stopped = false;
-			this.y -= 1.1;
+			this.y -= 1.1 * Math.abs(Math.sin(this.angle));
 		}
 		// it does not float forever...
 		if (stopped || this.range < 0)
@@ -160,7 +160,7 @@ function makeBullet(sx, sy, sa, px, py) {
 		dx : px,
 		dy : py,
 		color : "cyan",
-		angle : sa + Math.PI / 2
+		angle : sa
 	});
 }
 
@@ -248,6 +248,7 @@ var bbb = document.getElementById("bbb");
 function dbg() {
 	// aaa.innerHTML = JSON.stringify(ship);
 	// bbb.innerHTML = JSON.stringify(bullets);
+	aaa.innerHTML = JSON.stringify(ship)
 }
 
 var ctx = c.getContext("2d");
