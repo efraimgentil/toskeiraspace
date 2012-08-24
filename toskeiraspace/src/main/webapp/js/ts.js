@@ -79,30 +79,39 @@ function Bullet(p) {
 	Sprite.call(this, p);
 	this.dx = p.dx;
 	this.dy = p.dy;
-	this.range = 400;
+	this.range = 300;
+	this.target = p.target;
 	this.step = function() {
 		var mx = this.dx - this.x;
+		mx = Math.sqrt(mx * mx);
 		var my = this.dy - this.y;
+		my = Math.sqrt(my * my);
 		var stopped = true;
 		if (mx > 5) {
-			stopped = false;
-			this.x += 1.1 * Math.abs(Math.cos(this.angle));
-		} else if (mx < -5) {
-			stopped = false;
-			this.x -= 1.1 * Math.abs(Math.cos(this.angle));
+			if (this.dx >= this.x) {
+				this.x += 1.1;
+				stopped = false;
+			} else {
+				this.x -= 1.1;
+				stopped = false;
+			}
 		}
 		if (my > 5) {
-			stopped = false;
-			this.y += 1.1 * Math.abs(Math.sin(this.angle));
-		} else if (my < -5) {
-			stopped = false;
-			this.y -= 1.1 * Math.abs(Math.sin(this.angle));
+			if (this.dy >= this.y) {
+				stopped = false;
+				this.y += 1.1;
+			} else {
+				stopped = false;
+				this.y -= 1.1;
+			}
 		}
-		// it does not float forever...
-		if (stopped || this.range < 0)
+		// it will not float forever...
+		if (stopped || this.range < 0) {
 			this.isDead = true;
-		else
-			this.range -= 1.1;
+			if (stopped)
+				this.target.isDead = true;
+		}
+		this.range--;
 	};
 	this.draw = function(ctx) {
 		ctx.strokeStyle = this.color;
@@ -135,7 +144,7 @@ function Ship(p) {
 		if (this.openFire && player.target) {
 			this.openFire = false;
 			bullets.push(makeBullet(this.x, this.y, this.angle,
-					player.target.x, player.target.y));
+					player.target.x, player.target.y, player.target));
 		}
 	};
 	this.draw = function(ctx) {
@@ -153,14 +162,15 @@ function Ship(p) {
 
 }
 
-function makeBullet(sx, sy, sa, px, py) {
+function makeBullet(sx, sy, sa, px, py, tgt) {
 	return new Bullet({
 		x : sx,
 		y : sy,
 		dx : px,
 		dy : py,
 		color : "cyan",
-		angle : sa
+		angle : sa,
+		target : tgt
 	});
 }
 
@@ -186,6 +196,12 @@ function step() {
 		if (!bullets[i].isDead)
 			b2.push(bullets[i]);
 	bullets = b2;
+	i = asteroids.length;
+	b2 = [];
+	while (i--)
+		if (!asteroids[i].isDead)
+			b2.push(asteroids[i]);
+	asteroids = b2;
 	player.target = null;
 	// simulation step
 	i = bullets.length;
