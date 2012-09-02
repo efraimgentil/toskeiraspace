@@ -6,6 +6,7 @@ var c = document.getElementById("c");
 
 // the freaking global
 var player = {
+	score : 0,
 	click : {
 		x : 400,
 		y : 300
@@ -14,7 +15,11 @@ var player = {
 		x : 400,
 		y : 300
 	},
-	target : null
+	target : null,
+	draw : function(ctx) {
+		ctx.fillStyle = "White";
+		ctx.fillText("Score: " + this.score, 10, 10);
+	}
 };
 
 // basic class
@@ -198,9 +203,12 @@ function step() {
 	bullets = b2;
 	i = asteroids.length;
 	b2 = [];
-	while (i--)
+	while (i--) {
 		if (!asteroids[i].isDead)
 			b2.push(asteroids[i]);
+		else
+			player.score += 10;
+	}
 	asteroids = b2;
 	player.target = null;
 	// simulation step
@@ -220,6 +228,7 @@ function draw(ctx) {
 	// we always wipe the screen
 	ctx.clearRect(0, 0, c.width, c.height);
 	ctx.save();
+	player.draw(ctx);// HUD
 	ship.draw(ctx);
 	ctx.restore();
 	var i = asteroids.length;
@@ -258,20 +267,10 @@ function move(e) {
 };
 c.onmousemove = move;
 
-var aaa = document.getElementById("aaa");
-var bbb = document.getElementById("bbb");
-
-function dbg() {
-	// aaa.innerHTML = JSON.stringify(ship);
-	// bbb.innerHTML = JSON.stringify(bullets);
-	aaa.innerHTML = JSON.stringify(ship)
-}
-
 var ctx = c.getContext("2d");
 function mainLoop() {
 	step();
 	draw(ctx);
-	dbg();
 	setTimeout(mainLoop, 30);
 }
 mainLoop();

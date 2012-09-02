@@ -9,8 +9,6 @@
 </head>
 <body>
 	<canvas id="c" width="800" height="600"></canvas>
-	<div id="aaa"></div>
-	<div id="bbb"></div>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/ts.js"></script>
 </body>
 </html>
