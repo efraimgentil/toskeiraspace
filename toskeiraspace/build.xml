@@ -1,14 +1,19 @@
 <?xml version="1.0"?>
-<project name="toskeiraspace" default="war" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="ToskeiraSpace" default="run" xmlns:ivy="antlib:org.apache.ivy.ant">
+
   <!-- Project-specific configuration -->
   <loadproperties srcfile="project.properties"/>
+  <property name="main.class" value="${package.main}.${ant.project.name}"/>
   <property name="base.name" value="${artifactId}-${version}"/>
+
   <!-- Standard Directory Layout -->
   <property name="src.dir" value="src"/>
   <property name="test.dir" value="test"/>
   <property name="build.dir" value="build"/>
   <property name="dist.dir" value="dist"/>
+
   <!-- Targets -->
+
   <target name="resolve" description="Retrieve dependencies with Ivy.">
     <ivy:resolve log="download-only"/>
     <ivy:cachepath conf="build" pathid="build.classpath"/>
@@ -31,7 +36,7 @@
     </copy>
   </target>
 
-  <target name="war" depends="compile" description="Generate the jarfile distributable.">
+  <target name="jar" depends="compile" description="Generate the jarfile distributable.">
     <jar destfile="${dist.dir}/${base.name}.war" basedir="${build.dir}/classes">
       <manifest>
         <attribute name="Created-By" value="GNU Emacs Java Extension"/>

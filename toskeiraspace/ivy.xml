@@ -9,9 +9,11 @@
   </configurations>
   <dependencies>
 
-    <dependency org="org.slf4j" name="slf4j-api" rev="1.6.4" conf="build->default"/>
-    <dependency org="org.slf4j" name="slf4j-simple" rev="1.6.4" conf="build->default"/>
-    <dependency org="org.eclipse.jetty.aggregate" name="jetty-webapp" rev="7.3.0.v20110203" conf="build->default"/>
+    <dependency org="javax.servlet" name="servlet-api" rev="2.5" conf="default"/>
+    <dependency org="org.slf4j" name="slf4j-api" rev="1.6.4" conf="default"/>
+    <dependency org="org.slf4j" name="slf4j-simple" rev="1.6.4" conf="default"/>
+    <dependency org="org.eclipse.jetty.aggregate" name="jetty-webapp" rev="7.3.0.v20110203" conf="default"/>
+    <dependency org="spark" name="spark" rev="0.9.9.3-SNAPSHOT" conf="default"/>
 
     <!-- Unit Test -->
     <dependency org="junit" name="junit" rev="4.10"
