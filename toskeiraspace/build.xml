@@ -19,8 +19,6 @@
     <ivy:cachepath conf="build" pathid="build.classpath"/>
     <ivy:cachepath conf="default" pathid="runtime.classpath"/>
     <ivy:cachefileset conf="default" setid="runtime.fileset"/>
-    <ivy:cachepath conf="test" pathid="test.classpath"/>
-    <ivy:cachepath conf="analysis" pathid="analysis.classpath"/>
   </target>
 
   <target name="compile" depends="resolve" description="Compile all sources.">

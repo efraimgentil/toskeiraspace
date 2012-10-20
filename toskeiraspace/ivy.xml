@@ -7,7 +7,7 @@
   </configurations>
   <dependencies>
 
-    <dependency org="javax.servlet" name="servlet-api" rev="3.0" conf="default"/>
+    <dependency org="javax.servlet" name="servlet-api" rev="2.5" conf="default"/>
     <dependency org="org.eclipse.jetty.aggregate" name="jetty-webapp" rev="7.3.0.v20110203" conf="default"/>
 
   </dependencies>

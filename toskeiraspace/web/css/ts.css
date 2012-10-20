@@ -1,17 +1,13 @@
-body {
-	background: black;
-	color: white;
-}
-
-canvas {
-	border: 1px groove white;
-	margin: 0px;
-	position: absolute;
-	top: 5px;
-	left: 15px;
+.tscanvas {
+    border: 1px groove white;
+    margin: 0px;
+    position: relative;
+    top: 5px;
+    background-color: #000000;
+    color: #ffffff;
 }
 
 #aaa,#bbb {
-	width: 300px;
-	border: 1px groove white;
+    width: 300px;
+    border: 1px groove white;
 }
