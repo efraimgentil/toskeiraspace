@@ -7,46 +7,61 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.webapp.WebAppContext;
+import org.eclipse.jetty.webapp.*;
 import org.eclipse.jetty.server.handler.*;
 import org.eclipse.jetty.server.Handler;
+import org.eclipse.jetty.servlet.*;
 
 @SuppressWarnings("serial")
 public class ToskeiraSpace extends HttpServlet {
 
+    private static final String SAVE = "1";
+    private static final String OTHER = "2";
+    private static final String TEST_THE_GET = "3";
+
+
+    private String showSomething() {
+        return "{score:100}";
+    }
+
+    private void saveScore() {
+        System.out.println("salvar a parada em algum lugar nem que seja um txt");
+    }
+
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("index.html").forward(req, resp);
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        if(req.getParameter("o").equals(SAVE)) {
+            saveScore();
+        } else {
+            System.out.println("faz outra coisa sei la");
+        }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        res.setContentType("text/html");
+        res.setStatus(HttpServletResponse.SC_OK);
+        res.getWriter().println(showSomething());
     }
 
     public static void main(String[] args) throws Exception {
-        Server server = new Server(4567);
-        WebAppContext webAppContext = new WebAppContext("web", "/");
-        server.setHandler(webAppContext);
 
-        /*ResourceHandler rh = new ResourceHandler();
+        Server s = new Server(4567);
+
+        ResourceHandler rh = new ResourceHandler();
         rh.setDirectoriesListed(true);
         rh.setWelcomeFiles(new String[]{"index.html"});
-        rh.setResourceBase(".");
+        rh.setResourceBase("web");
 
-        HandlerList handlers = new HandlerList();
-        handlers.setHandlers(new Handler[] {rh, new DefaultHandler()});
-        server.setHandler(handlers);*/
+        ServletContextHandler sch = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        sch.setContextPath("/ts");
+        sch.addServlet(new ServletHolder(new ToskeiraSpace()),"/*");
 
-        /*ContextHandler context = new ContextHandler();
-        context.setContextPath("/tsctx");
-        context.setResourceBase(".");
-        context.setClassLoader(Thread.currentThread().getContextClassLoader());
-        server.setHandler(context);*/
+        HandlerList hrs = new HandlerList();
+        hrs.setHandlers(new Handler[] { sch, rh, new DefaultHandler() });
 
-        WebAppContext context = new WebAppContext();
-        context.setDescriptor("web/WEB-INF/web.xml");
-        context.setResourceBase("web");
-        context.setContextPath("/");
-        context.setParentLoaderPriority(true);
-        server.setHandler(context);
-
-        server.start();
-        server.join();
+        s.setHandler(hrs);
+        s.start();
+        s.join();
     }
 }
