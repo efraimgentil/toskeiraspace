@@ -8,6 +8,6 @@ Ordinary yet funny HTML 5 asteroids clone.
 
 
 
-===Official logo:
+###Official logo:
 
 ![Alt logo](https://raw.githubusercontent.com/EsmerilProgramming/toskeiraspace/master/logo.png)
