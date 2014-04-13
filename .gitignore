@@ -1,0 +1,11 @@
+*.class
+*.jar
+*.war
+.settings/
+target/
+.classpath
+.project
+*~
+.*
+!/.gitignore
+/build

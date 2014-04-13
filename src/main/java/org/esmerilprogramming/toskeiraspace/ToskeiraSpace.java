@@ -1,16 +1,11 @@
-package org.toskeiraspace;
+package org.esmerilprogramming.toskeiraspace;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.webapp.*;
-import org.eclipse.jetty.server.handler.*;
-import org.eclipse.jetty.server.Handler;
-import org.eclipse.jetty.servlet.*;
 
 @SuppressWarnings("serial")
 public class ToskeiraSpace extends HttpServlet {
@@ -43,25 +38,5 @@ public class ToskeiraSpace extends HttpServlet {
         res.setStatus(HttpServletResponse.SC_OK);
         res.getWriter().println(showSomething());
     }
-
-    public static void main(String[] args) throws Exception {
-
-        Server s = new Server(4567);
-
-        ResourceHandler rh = new ResourceHandler();
-        rh.setDirectoriesListed(true);
-        rh.setWelcomeFiles(new String[]{"index.html"});
-        rh.setResourceBase("web");
-
-        ServletContextHandler sch = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        sch.setContextPath("/ts");
-        sch.addServlet(new ServletHolder(new ToskeiraSpace()),"/*");
-
-        HandlerList hrs = new HandlerList();
-        hrs.setHandlers(new Handler[] { sch, rh, new DefaultHandler() });
-
-        s.setHandler(hrs);
-        s.start();
-        s.join();
-    }
+    
 }
