@@ -3,13 +3,16 @@ package org.esmerilprogramming.toskeiraspace;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@SuppressWarnings("serial")
+@WebServlet(urlPatterns = "/ts")
 public class ToskeiraSpace extends HttpServlet {
-
+    
+    private static final long serialVersionUID = -4320568530789814584L;
+    
     private static final String SAVE = "1";
     private static final String OTHER = "2";
     private static final String TEST_THE_GET = "3";
