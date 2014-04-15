@@ -26,6 +26,7 @@ var c = document.getElementById("c");
 // the freaking global
 var player = {
         score : 0,
+        pangle: 0, 
         click : {
                 x : 400,
                 y : 300
@@ -157,6 +158,10 @@ function Ship(p) {
                 var x = player.move.x - this.x;
                 var y = player.move.y - this.y;
                 this.angle = Math.atan2(y, x) + Math.PI / 2;
+                
+                if (this.angle === player.pangle) player.score += 2;
+                console.log(this.angle);
+                
                 // move (and shoot something maybe)
                 x = player.click.x - this.x;
                 y = player.click.y - this.y;
