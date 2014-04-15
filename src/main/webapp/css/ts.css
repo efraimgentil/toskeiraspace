@@ -11,3 +11,17 @@
     width: 300px;
     border: 1px groove white;
 }
+
+.borderClass {
+	border: 1px solid black;
+}
+
+.developers .pull-left img{
+	margin-right: 5px;
+	width: 150px;
+	height: 150px;
+}
+
+.developers .media-heading{
+	margin-top: 0px;
+}
