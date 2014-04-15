@@ -1,11 +1,14 @@
+<%-- in the name of the putaria --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>ToskeiraSpace!</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/ts.css" rel="stylesheet">
+<link href="${ctx}/css/bootstrap.min.css" rel="stylesheet">
+<link href="${ctx}/css/ts.css" rel="stylesheet">
 <style>
 body {
 	padding-top: 60px;
@@ -25,7 +28,7 @@ body {
 				</a> <img class="pull-left" src="img/logot2.png"
 					style="margin-right: 10px; margin-top: 3px;"> <a
 					class="brand" href="#">ToskeiraSpace</a> <a class="brand"
-					href="/ts">Reset</a> <a class="brand" href="#">Show scores</a>
+					href="${ctx}">Reset</a> <a class="brand" href="#">Show scores</a>
 				<div class="nav-collapse collapse ">
 					<ul class="nav pull-right">
 						<li><a href="#">About</a></li>
@@ -43,7 +46,7 @@ body {
 		<h4>
 			Other games play... <em>ToskeiraSpace</em> Kill !
 		</h4>
-		<hr>
+		<hr />
 
 		<h5>5 last - Vagabundos online:</h5>
 		<ul>
@@ -66,9 +69,9 @@ body {
 		</ul>
 	</div>
 
-	<script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/st.js"></script>
-	<script type="text/javascript" src="js/ts.js"></script>
+	<script type="text/javascript" src="${ctx}/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${ctx}/js/st.js"></script>
+	<script type="text/javascript" src="${ctx}/js/ts.js"></script>
 
 </body>
 </html>
