@@ -296,6 +296,6 @@ var ctx = c.getContext("2d");
 function mainLoop() {
         step();
         draw(ctx);
-        setTimeout(mainLoop, 30);
+        setTimeout(mainLoop, 5); //hack again.
 }
 mainLoop();
