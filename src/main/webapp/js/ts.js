@@ -173,6 +173,7 @@ function Ship(p) {
         };
         this.draw = function(ctx) {
                 ctx.strokeStyle = this.color;
+                ctx.strokeStyle = 'LimeGreen'; //little hack
                 ctx.translate(this.x, this.y);
                 ctx.rotate(this.angle);
                 ctx.beginPath();
@@ -281,12 +282,13 @@ c.onclick = click;
 function move(e) {
         player.move.x = e.clientX - c.offsetLeft;
         player.move.y = e.clientY - c.offsetTop;
+        var csr = document.body.style.cursor;
         if (ship.mouseover())
-                document.body.style.cursor = "move";
+        	csr = "move";
         else if (player.target)
-                document.body.style.cursor = "crosshair";
+        	csr = "crosshair";
         else
-                document.body.style.cursor = "default";
+        	csr= "default";
 };
 c.onmousemove = move;
 
