@@ -40,16 +40,8 @@ body {
 		</ul>
 
 		<hr>
-
-		<h5>Top 5 score:</h5>
-		<ul>
-			<li>Super Vagabundo 01</li>
-			<li>Vagabundo 02</li>
-			<li>Vagabundo 03</li>
-			<li>Vagabundo 04</li>
-			<li>Vagabundo 05</li>
-		</ul>
-	</div>
+		
+		<div id="clokk" style="float:left; font-size: 100px; margin-left: 20px; margin-top: 20px;"></div>
 
 	<script type="text/javascript" src="${ctx}/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${ctx}/js/st.js"></script>

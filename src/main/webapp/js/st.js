@@ -56,3 +56,31 @@ var st = {
         xhr.send(null);
     }
 };
+
+
+/*clock*/
+var Timer;
+var TotalSeconds;
+
+function CreateTimer(TimerID, Time) {
+    Timer = document.getElementById(TimerID);
+    TotalSeconds = Time;
+    UpdateTimer();
+    window.setTimeout("Tick()", 1000);
+}
+
+function Tick() {
+    if (TotalSeconds <= 0) {
+        console.log('lascou');
+        return;
+    }
+
+    TotalSeconds -= 1;
+    UpdateTimer();
+    window.setTimeout("Tick()", 1000);
+}
+
+function UpdateTimer() {
+    Timer.innerHTML = TotalSeconds;
+}
+CreateTimer("clokk", 25);
