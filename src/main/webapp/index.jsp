@@ -39,7 +39,7 @@ body {
 			<li>Vagabundo 05</li>
 		</ul>
 		
-		<audio controls> <source id="music" src="http://www.8bitpeoples.com/files/8bp069-01-she-nebula.mp3" type="audio/mpeg"> </audio>
+		<audio controls autoplay><source id="music" src="http://www.8bitpeoples.com/files/8bp069-01-she-nebula.mp3" type="audio/mpeg"></audio>
 		
      </div>
 		<hr>

@@ -64,6 +64,24 @@ body {
 					</div>
 				</li>
 				<li class="span6">
+                    <div class="thumbnail">
+                        <div class="media">
+                            <a class="pull-left" href="https://github.com/danielsoro" target="_blank">
+                                <img class="media-object"
+                                src="https://avatars1.githubusercontent.com/u/350841?s=150">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">Daniel Cunha</h4>
+
+                                <div class="media">Floripa Guy</div>
+                                <br/>
+                                <div class="media"><a href="https://github.com/danielsoro">Github</a></div>
+                            </div>
+                            <div style="clear: both;" ></div>
+                        </div>
+                    </div>
+                </li>
+				<li class="span6">
 					<div class="thumbnail">
 						<div class="media">
                             <a class="pull-left" href="https://github.com/efraimgentil" target="_blank">
@@ -85,7 +103,9 @@ body {
 			</ul>
 		</div>
 		<div class="row">
-	       <audio controls> <source id="music" src="http://www.8bitpeoples.com/files/8bp131-01-doomcloud-raw_data.mp3" type="audio/mpeg"> </audio>
+	       <audio controls autoplay>
+	           <source id="music" src="http://www.8bitpeoples.com/files/8bp131-01-doomcloud-raw_data.mp3" type="audio/mpeg">
+	       </audio>
 	   </div>
 	</div>
     
