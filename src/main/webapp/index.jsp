@@ -38,7 +38,10 @@ body {
 			<li>Vagabundo 04</li>
 			<li>Vagabundo 05</li>
 		</ul>
-
+		
+		<audio controls> <source id="music" src="http://www.8bitpeoples.com/files/8bp069-01-she-nebula.mp3" type="audio/mpeg"> </audio>
+		
+     </div>
 		<hr>
 		
 		<div id="clokk" style="float:left; font-size: 100px; margin-left: 20px; margin-top: 20px;"></div>

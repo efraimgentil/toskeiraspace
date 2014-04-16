@@ -19,7 +19,7 @@ body {
 <body>
 	<jsp:include page="menu.jsp" />
 
-	<div style="max-width: 940px; margin: 0 auto;">
+    <div style="max-width: 940px; margin: 0 auto;">
 	   <div class="row">
 	       <div class="span12">
 	           <h1>Super Developers Team</h1>
@@ -84,8 +84,11 @@ body {
 				</li>
 			</ul>
 		</div>
+		<div class="row">
+	       <audio controls> <source id="music" src="http://www.8bitpeoples.com/files/8bp131-01-doomcloud-raw_data.mp3" type="audio/mpeg"> </audio>
+	   </div>
 	</div>
-
+    
 	<script type="text/javascript" src="${ctx}/js/st.js"></script>
 </body>
 </html>
