@@ -14,9 +14,8 @@ body {
 	padding-top: 60px;
 }
 </style>
-<link rel="shortcut icon" href="favicon.ico">
+<link rel="shortcut icon" href="${ctx}/img/favicon.ico">
 </head>
-
 <body>
 	<jsp:include page="menu.jsp" />
 

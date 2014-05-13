@@ -112,37 +112,15 @@ function Bullet(p) {
         		
         	this.x += this.speed * Math.cos( this.angle );
         	this.y += this.speed * Math.sin( this.angle );
-        	
-//                var mx = this.dx - this.x;
-//                mx = Math.sqrt(mx * mx);
-//                var my = this.dy - this.y;
-//                my = Math.sqrt(my * my);
-                var stopped = false;
-//                if (mx > 5) {
-//                        if (this.dx >= this.x) {
-//                                this.x += 1.1;
-//                                stopped = false;
-//                        } else {
-//                                this.x -= 1.1;
-//                                stopped = false;
-//                        }
-//                }
-//                if (my > 5) {
-//                        if (this.dy >= this.y) {
-//                                stopped = false;
-//                                this.y += 1.1;
-//                        } else {
-//                                stopped = false;
-//                                this.y -= 1.1;
-//                        }
-//                }
-                // it will not float forever...
-                if (stopped || this.range < 0) {
-                        this.isDead = true;
-                        if (stopped)
-                                this.target.isDead = true;
-                }
-                this.range--;
+            var stopped = false;
+            // it will not float forever...
+            if (stopped || this.range < 0) {
+               this.isDead = true;
+               if (stopped){
+                  this.target.isDead = true;
+               }
+            }
+            this.range--;
         };
         this.draw = function(ctx) {
                 ctx.strokeStyle = this.color;
@@ -192,6 +170,12 @@ function Bullet(p) {
 function Ship(p) {
         Sprite.call(this, p);
         this.openFire = false;
+        this.accelerate = false;
+        this.currentAcceleration = 0;
+        this.moveShip =  function( currentAcceleration , originalAngle ){
+          	this.x += currentAcceleration * Math.cos( originalAngle );
+        	this.y += currentAcceleration * Math.sin( originalAngle );
+        };
         this.step = function() {
                 // rotate
                 var x = player.move.x - this.x;
@@ -199,25 +183,35 @@ function Ship(p) {
                 this.originalAngle = Math.atan2(y, x);
                 this.angle = this.originalAngle + Math.PI / 2;
                 
-                var k  = Math.abs(this.angle).toFixed(1); 
-                var w  = Math.abs(player.pangle).toFixed(1);
-                if (k === w) {
-                	player.score += 2;
-                	player.pangle = (Math.random() * 1).toFixed(1);
+                if(this.accelerate){
+                	if(this.currentAcceleration  < 5.0){
+                		this.currentAcceleration += 0.5;
+                	}
+                	this.moveShip( this.currentAcceleration ,  this.originalAngle );
+                }else if( this.currentAcceleration > 0){
+                	this.currentAcceleration -= 0.2;
+                	this.moveShip( this.currentAcceleration ,  this.originalAngle );
                 }
                 
+//                var k  = Math.abs(this.angle).toFixed(1); 
+//                var w  = Math.abs(player.pangle).toFixed(1);
+//                if (k === w) {
+//                	player.score += 2;
+//                	player.pangle = (Math.random() * 1).toFixed(1);
+//                }
+                
                 // move (and shoot something maybe)
-                x = player.click.x - this.x;
-                y = player.click.y - this.y;
-                var d = Math.sqrt(x * x + y * y);
-                if (d) {
-                        this.x += (x > 15 ? 0.7 : x < -15 ? -0.7 : 0);
-                        this.y += (y > 15 ? 0.7 : y < -15 ? -0.7 : 0);
-                }
-                if (this.openFire && player.target) {
+//                x = player.click.x - this.x;
+//                y = player.click.y - this.y;
+//                var d = Math.sqrt(x * x + y * y);
+//                if (d) {
+//                        this.x += (x > 15 ? 0.7 : x < -15 ? -0.7 : 0); 
+//                        this.y += (y > 15 ? 0.7 : y < -15 ? -0.7 : 0);
+//                }
+                if ( this.openFire ) {
                         this.openFire = false;
-                        bullets.push(makeBullet(this.x, this.y, this.originalAngle,
-                                        player.target.x, player.target.y, player.target));
+                        bullets.push(makeBullet( this.x, this.y, this.originalAngle, 
+                                        0 , 0 , null ));
                 }
         };
         this.draw = function(ctx) {
@@ -319,26 +313,37 @@ function draw(ctx) {
         }
 }
 
-function click(e) {
-        if (player.target) {// shoot instead change destination
-                ship.openFire = true;
-        } else {
-                player.click.x = e.clientX - c.offsetLeft;
-                player.click.y = e.clientY - c.offsetTop;
-        }
+function shoot(e) {
+	ship.openFire = true;
 };
-c.onclick = click;
+c.onclick = shoot;
+
+
+window.onkeydown = function(e){
+	//32 = barra de espaço
+	if(e.keyCode == 32){
+		ship.accelerate = true;
+	}
+};
+
+window.onkeyup = function(e){
+	//32 = barra de espaço
+	if(e.keyCode == 32){
+		ship.accelerate = false;
+	}
+};
+
 
 function move(e) {
         player.move.x = e.clientX - c.offsetLeft;
         player.move.y = e.clientY - c.offsetTop;
-        var csr = document.body.style.cursor;
-        if (ship.mouseover())
-        	csr = "move";
-        else if (player.target)
-        	csr = "crosshair";
-        else
-        	csr= "default";
+//        var csr = document.body.style.cursor;
+//        if (ship.mouseover())
+//        	csr = "move";
+//        else if (player.target)
+//        	csr = "crosshair";
+//        else
+//        	csr= "default";
 };
 c.onmousemove = move;
 
