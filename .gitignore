@@ -7,6 +7,7 @@ target/
 .project
 *~
 .*
+*.iml
 !/.gitignore
 /build
 /bin
