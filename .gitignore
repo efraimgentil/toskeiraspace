@@ -1,8 +1,6 @@
-*.class
-*.jar
-*.war
+dist/
+generated/
 .settings/
-target/
 .classpath
 .project
 *~
