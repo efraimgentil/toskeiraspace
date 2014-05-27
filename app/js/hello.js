@@ -1,5 +1,5 @@
 window.helloText = function() {
-  return 'Hello, World!';
+  return 'Hail from the other side !';
 };
 
 window.hello = function() {
