@@ -1,5 +1,6 @@
 dist/
 generated/
+.sass-cache
 .settings/
 .classpath
 .project
