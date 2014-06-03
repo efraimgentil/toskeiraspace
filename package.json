@@ -1,9 +1,9 @@
 {
   "name": "toskeiraspace",
-  "description": "An HTML/JS/CSS app",
+  "description": "Ordinary yet funny HTML 5 asteroids clone",
   "version": "0.0.1",
   "private": true,
-  "author": "John Doe",
+  "author": "EsmerilProgramming Team",
   "devDependencies": {
     "lineman": "~0.32.1"
   },
