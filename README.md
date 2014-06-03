@@ -3,7 +3,16 @@ toskeiraspace
 
 Ordinary yet funny HTML 5 asteroids clone.
 
-initial idea, implementation and javascript game engine by [Sombriks](https://github.com/sombriks). 
+( Initial idea and javascript core js game by [Sombriks](https://github.com/sombriks). ) 
+
+
+##Setup
+
+* Install [node.js](http://nodejs.org/)
+* Install [linemanjs](http://linemanjs.com/)
+* Clone...
+* Run !
+
 
 ![Alt ts](https://raw.githubusercontent.com/EsmerilProgramming/toskeiraspace/master/ts.png)
 
@@ -11,3 +20,4 @@ initial idea, implementation and javascript game engine by [Sombriks](https://gi
 ###Official logo:
 
 ![Alt logo](https://raw.githubusercontent.com/EsmerilProgramming/toskeiraspace/master/logo.png)
+

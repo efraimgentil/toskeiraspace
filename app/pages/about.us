@@ -1,23 +1,17 @@
-<%-- in the name of the putaria --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="ctx" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<title>ToskeiraSpace!</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="${ctx}/css/bootstrap.min.css" rel="stylesheet">
-<link href="${ctx}/css/ts.css" rel="stylesheet">
-<style>
-body {
-	padding-top: 60px;
-}
-</style>
-<link rel="shortcut icon" href="favicon.ico">
-</head>
-<body>
-	<jsp:include page="menu.jsp" />
+  <head>
+    <title><%= pkg.name %></title>
+
+    <link rel="stylesheet" type="text/css" href="<%= css %>" media="all" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="all" />
+  </head>
+  <body>
+
+
+    <div id="menu_aqui">
+
+    </div>
 
     <div style="max-width: 940px; margin: 0 auto;">
 	   <div class="row">
@@ -108,7 +102,6 @@ body {
 	       </audio>
 	   </div>
 	</div>
-    
-	<script type="text/javascript" src="${ctx}/js/st.js"></script>
-</body>
+    <script type="text/javascript" src="<%= js %>"></script>
+  </body>
 </html>

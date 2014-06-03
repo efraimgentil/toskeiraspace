@@ -1,8 +1,7 @@
-*.class
-*.jar
-*.war
+dist/
+generated/
+.sass-cache
 .settings/
-target/
 .classpath
 .project
 *~
