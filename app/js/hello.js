@@ -4,7 +4,8 @@ window.helloText = function() {
 
 window.hello = function() {
   html = JST['app/templates/hello.us']({text: helloText()});
-  document.body.innerHTML += html;
+  //document.body.innerHTML += html;
+  // going to keep this just to learn more about template.
 };
 
 if(window.addEventListener) {
