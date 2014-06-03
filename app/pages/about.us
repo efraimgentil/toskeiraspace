@@ -5,7 +5,6 @@
 
     <link rel="stylesheet" type="text/css" href="<%= css %>" media="all" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="all" />
-    <link rel="stylesheet" type="text/css" href="css/ts.css" media="all" />
   </head>
   <body>
 

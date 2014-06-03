@@ -5,15 +5,43 @@
 
     <link rel="stylesheet" type="text/css" href="<%= css %>" media="all" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="all" />
-    <link rel="stylesheet" type="text/css" href="css/ts.css" media="all" />
   </head>
   <body>
 
-    <div id="menu_aqui">
+    <div id="menu_aqui"></div>
 
+    <div style="float: left">
+   	    <canvas id="c" class="tscanvas" width="1000" height="500"></canvas>
     </div>
 
+    <div style="margin-right: 10px;">
+        <h4>
+            Other games play... <em>ToskeiraSpace</em> Kill !
+        </h4>
+        <hr>
+
+        <h5>5 last - Vagabundos online:</h5>
+        <ul>
+            <li>Vagabundo 01</li>
+            <li>Vagabundo 02</li>
+            <li>Vagabundo 03</li>
+            <li>Vagabundo 04</li>
+            <li>Vagabundo 05</li>
+        </ul>
+
+        <hr>
+
+        <h5>Top 5 score:</h5>
+        <ul>
+            <li>Super Vagabundo 01</li>
+            <li>Vagabundo 02</li>
+            <li>Vagabundo 03</li>
+            <li>Vagabundo 04</li>
+            <li>Vagabundo 05</li>
+        </ul>
+    </div>
 
     <script type="text/javascript" src="<%= js %>"></script>
+    <script type="text/javascript" src="js/ts.js"></script>
   </body>
 </html>
