@@ -1,0 +1,17 @@
+<li class="span6">
+    <div class="thumbnail">
+        <div class="media">
+            <a class="pull-left" href="<%= github_url %>" target="_blank">
+                <img class="media-object"
+                src="<%= avatar_url %>">
+            </a>
+            <div class="media-body">
+                <h4 class="media-heading"><%= username %></h4>
+                <div class="media"><%= description %></div>
+                <br/>
+                <div class="media"><a href="<%= github_url %>">Github</a></div>
+            </div>
+            <div style="clear: both;" ></div>
+        </div>
+    </div>
+</li>
