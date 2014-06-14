@@ -14,7 +14,7 @@ window.about = function() {
     },
     {
         username: "Daniel Cunha",
-        description:"Some cool stuff here",
+        description:"Floripa guy",
         avatar_url: "https://avatars1.githubusercontent.com/u/350841?s=150",
         github_url: "https://github.com/danielsoro"
     },
@@ -23,7 +23,13 @@ window.about = function() {
         description:"The only one that don't have a cool nickname =(",
         avatar_url: "http://1.gravatar.com/avatar/72cdf06d6642a3d2e896f50aa103fe63?s=150",
         github_url: "https://github.com/efraimgentil"
-    }
+    },
+     {
+         username: "Felipe Martins",
+         description:"peh na cova",
+         avatar_url: "https://avatars0.githubusercontent.com/u/5208478?s=140",
+         github_url: "https://github.com/felipewmartins"
+     }
   ];
   
   html = "";
