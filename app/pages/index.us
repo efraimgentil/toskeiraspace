@@ -43,7 +43,14 @@
 
     <audio controls autoplay><source id="music" src="http://www.8bitpeoples.com/files/8bp069-01-she-nebula.mp3" type="audio/mpeg"></audio>
 
+    <button id="btnCat" style="display:block">Start BlackCat</button>
+
+    <img id="blackcat" src="img/blackcat.png" style="display: none; position: absolute" />
+
+
+
     <script type="text/javascript" src="<%= js %>"></script>
     <script type="text/javascript" src="js/ts.js"></script>
+    <script type="text/javascript" src="js/blackcat.js"></script>
   </body>
 </html>
