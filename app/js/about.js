@@ -26,7 +26,7 @@ window.about = function() {
     },
      {
          username: "Felipe Martins",
-         description:"Só os ósso",
+         description:"peh na cova",
          avatar_url: "https://avatars0.githubusercontent.com/u/5208478?s=140",
          github_url: "https://github.com/felipewmartins"
      }
