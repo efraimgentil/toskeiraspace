@@ -13,7 +13,7 @@ window.about = function() {
         github_url: "https://github.com/eprogramming"
     },
     {
-        username: "Daniel Cunha",
+        username: "Daniel Cunha (soro)",
         description:"Floripa guy",
         avatar_url: "https://avatars1.githubusercontent.com/u/350841?s=150",
         github_url: "https://github.com/danielsoro"
