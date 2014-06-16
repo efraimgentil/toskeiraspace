@@ -1,12 +1,13 @@
-var SPACE = SPACE || {};
-window.onload = function(){
 
+var SPACE = SPACE || {};
+window.startGame = function(){
+    
     SPACE.blackcat = {
 
         randomPosition : function(excludePosition){
             var position = excludePosition;
-            while( position == excludePosition){
-                var i = parseInt( Math.random() * 20 + 1 );
+            while( position === excludePosition){
+                var i = parseInt( Math.random() * 20 + 1 , 0);
                 if( i <= 5 ){
                     position = "LEFT";
                 }else if( i <= 10 ){
@@ -20,22 +21,22 @@ window.onload = function(){
             return position;
         },
         getMaxAvailablePosition : function(position){
-            var max = ("TOP" == position || "BOTTOM" == position) ? window.innerWidth
+            var max = ("TOP" === position || "BOTTOM" === position) ? window.innerWidth
                : window.innerHeight;
                return max ;
         },
         define2dPoint : function(position , value){
             var point2d = { x : 0 , y : 0 };
-            if(position == "TOP"){
+            if(position === "TOP"){
                 point2d = { x : value , y : 0 };
             }
-            if(position == "BOTTOM"){
+            if(position === "BOTTOM"){
                 point2d = { x : value , y : window.innerHeight };
             }
-            if(position == "LEFT"){
+            if(position === "LEFT"){
                 point2d = { x : 0 , y : value };
             }
-            if(position == "RIGHT"){
+            if(position === "RIGHT"){
                 point2d = { x : window.innerWidth , y : value };
             }
             return point2d;
@@ -75,8 +76,8 @@ window.onload = function(){
                     var yDestination =  points.endPoint.y;
 
 
-                    if ( ( xCurrent < 0 || xCurrent > window.innerWidth ) 
-                    || ( yCurrent < 0 || yCurrent > window.innerHeight) ) {
+                    if ( ( xCurrent < 0 || xCurrent > window.innerWidth ) || 
+                         ( yCurrent < 0 || yCurrent > window.innerHeight) ) {
                         SPACE.blackcat.stopCat( true );
                             return;
                     }
@@ -88,8 +89,7 @@ window.onload = function(){
                     yCurrent += speedY;
                     points.startPoint.y = yCurrent;
                     blackcat.style.top = yCurrent + "px";
-                }
-             , 20 );
+                }, 20 );
         },
         interval : null,
         points   : null,
@@ -120,3 +120,9 @@ window.onload = function(){
     };
 
 };
+
+if(window.addEventListener) {
+  window.addEventListener('DOMContentLoaded', startGame, false);
+} else {
+  window.attachEvent('onload', startGame );
+}

@@ -50,7 +50,7 @@
 
 
     <script type="text/javascript" src="<%= js %>"></script>
-    <script type="text/javascript" src="js/ts.js"></script>
-    <script type="text/javascript" src="js/blackcat.js"></script>
+    <!-- <script type="text/javascript" src="js/ts.js"></script> -->
+    <!-- <script type="text/javascript" src="js/blackcat.js"></script> -->
   </body>
 </html>
