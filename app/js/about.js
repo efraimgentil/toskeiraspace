@@ -2,31 +2,31 @@ window.about = function() {
   developers = [
     {
         username: "Sombriks",
-        description:"Some cool stuff here",
+        description:"Noob Saibot",
         avatar_url: "https://avatars2.githubusercontent.com/u/556695?s=150",
         github_url: "https://github.com/sombriks"
     },
     {
         username: "Eprogramming",
-        description:"HULK SMASH",
+        description:"Hulk",
         avatar_url: "https://avatars2.githubusercontent.com/u/6443576?s=150",
         github_url: "https://github.com/eprogramming"
     },
     {
         username: "Daniel Cunha (soro)",
-        description:"Floripa guy",
+        description:"Deadpool",
         avatar_url: "https://avatars1.githubusercontent.com/u/350841?s=150",
         github_url: "https://github.com/danielsoro"
     },
     {
         username: "Efraim Gentil",
-        description:"The only one that don't have a cool nickname =(",
+        description:"Lanterna verde",
         avatar_url: "http://1.gravatar.com/avatar/72cdf06d6642a3d2e896f50aa103fe63?s=150",
         github_url: "https://github.com/efraimgentil"
     },
      {
          username: "Felipe Martins",
-         description:"peh na cova",
+         description:"Noturno",
          avatar_url: "https://avatars0.githubusercontent.com/u/5208478?s=140",
          github_url: "https://github.com/felipewmartins"
      }
