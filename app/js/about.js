@@ -29,7 +29,14 @@ window.about = function() {
          description:"Noturno",
          avatar_url: "https://avatars0.githubusercontent.com/u/5208478?s=140",
          github_url: "https://github.com/felipewmartins"
-     }
+     },
+       {
+           username: "Boaglio",
+           description:"Gilgamesh",
+           avatar_url: "https://avatars2.githubusercontent.com/u/6140?s=460",
+           github_url: "https://github.com/boaglio"
+       }
+
   ];
   
   html = "";
