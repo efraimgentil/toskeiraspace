@@ -4,7 +4,7 @@
     <title><%= pkg.name %></title>
 
     <link rel="stylesheet" type="text/css" href="<%= css %>" media="all" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="all" />
+    <!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="all" />-->
   </head>
   <body>
 
@@ -20,14 +20,10 @@
         </h4>
         <hr>
 
-        <h5>5 last - Vagabundos online:</h5>
-        <ul>
-            <li>Vagabundo 01</li>
-            <li>Vagabundo 02</li>
-            <li>Vagabundo 03</li>
-            <li>Vagabundo 04</li>
-            <li>Vagabundo 05</li>
-        </ul>
+        <h3>
+        <div id="clock" />
+        </h3>
+
 
         <hr>
 
@@ -49,8 +45,9 @@
 
 
 
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery.countdown.min.js"></script>
     <script type="text/javascript" src="<%= js %>"></script>
-    <!-- <script type="text/javascript" src="js/ts.js"></script> -->
     <!-- <script type="text/javascript" src="js/blackcat.js"></script> -->
   </body>
 </html>
