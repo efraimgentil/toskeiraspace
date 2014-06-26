@@ -116,7 +116,7 @@ window.startGame = function(){
             SPACE.blackcat.stopCat();
             btnCat.textContent = "Start BlackCat";
         }
-        
+
     };
 
 };
