@@ -3,6 +3,10 @@
  * autor: Sombriks 
  * since 2012
  */
+var SPACE = SPACE || {};
+SPACE.mainLoopInterval = null;
+var frame = 0;
+var frameConsole = 100;
 window.toskeiraspace = function(){
     var c = document.getElementById("c");
     // the freaking global
@@ -32,7 +36,7 @@ window.toskeiraspace = function(){
         this.angle = p.angle || 0.7;
         this.x = p.x || 400;
         this.y = p.y || 300;
-        this.color = p.color || "white";
+        this.color = ( this.color || p.color ) || "white";
         this.isDead = false;
         this.mouseover = function() {
             var x = player.move.x - this.x;
@@ -93,10 +97,8 @@ window.toskeiraspace = function(){
         this.target = p.target;
         this.speed = 1.7;
         this.step = function() {
-
             this.x += this.speed * Math.cos( this.angle );
             this.y += this.speed * Math.sin( this.angle );
-
             var stopped = false;
             // it will not float forever...
             if (stopped || this.range < 0) {
@@ -117,7 +119,6 @@ window.toskeiraspace = function(){
             ctx.stroke();
         };
         this.checkColision = function(arrObject  , ctx) {
-
             var bulletColisionRangeX1 = this.x - 30;
             var bulletColisionRangeY1 = this.y - 30;
 
@@ -142,24 +143,253 @@ window.toskeiraspace = function(){
         };
     }
 
-    function makeBullet(sx, sy, sa, px, py, tgt) {
-        return new Bullet ({
-            x : sx,
-            y : sy,
-            dx : px,
-            dy : py,
-            color : "cyan",
-            angle : sa,
-            target : tgt
-        });
-    }
 
     var bullets = [];
+    var objects = [];
+    SPACE.addObject = function( obj ){
+        objects.push( obj );
+    };
+
+    SPACE.bulletType = SPACE.bulletType || {};
+    SPACE.bulletType.default = function(p){
+        bullet =  {
+            dx: p.dx,
+            dy: p.dy,
+            range: 400,
+            color: "cyan",
+            target: p.target,
+            speed: 1.7,
+            step: function() {
+                this.x += this.speed * Math.cos( this.angle );
+                this.y += this.speed * Math.sin( this.angle );
+                // it will not float forever...
+                if ( --this.range < 0) {
+                    this.isDead = true;
+                }
+            },
+            draw: function(ctx) {
+                ctx.strokeStyle = this.color;
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.arc(0, 0, 4, 0, Math.PI * 2, false);
+                ctx.stroke();
+            },
+            checkColision: function(arrObject ) {
+                var bulletColisionRangeX1 = this.x - 30;
+                var bulletColisionRangeY1 = this.y - 30;
+
+                function insideX(objX) {
+                    return (bulletColisionRangeX1 <= objX && objX  <= ( bulletColisionRangeX1 + 60 ) );
+                }
+
+                function insideY(objY) {
+                    return (bulletColisionRangeY1 <= objY && objY <= ( bulletColisionRangeY1 + 60 ) );
+                }
+
+                var objLength = arrObject.length;
+                for(var i = 0; i < objLength ; i++){
+                    var obj = arrObject[i];
+                    if (insideX(obj.x) && insideY(obj.y)) {
+                        if ((obj.x - obj.width ) <= (this.x + 2) && (this.x - 2) <=  (obj.x + obj.width) && (obj.y - obj.width) <= (this.y + 2) && (this.y - 2) <=  (obj.y + obj.width)) {
+                            this.isDead = true;
+                            obj.isDead = true;
+                        }
+                    }
+                }
+            }
+        };
+        Sprite.call( bullet , p );
+        return bullet;
+    };
+
+    SPACE.bulletType.laser = function(p){
+        bullet =  {
+            dx: p.dx,
+            dy: p.dy,
+            range: 600,
+            color: "red",
+            target: p.target,
+            speed: 2.3,
+            step: function() {
+                this.x += this.speed * Math.cos( this.angle );
+                this.y += this.speed * Math.sin( this.angle );
+                // it will not float forever...
+                if ( --this.range < 0) {
+                    this.isDead = true;
+                }
+            },
+            draw: function(ctx) {
+                ctx.strokeStyle = this.color;
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.rect( 0 , 0 , 5 , 1);
+                ctx.stroke();
+            },
+            checkColision: function( arrObject ) {
+                var bulletColisionRangeX1 = this.x - 30;
+                var bulletColisionRangeY1 = this.y - 30;
+
+                function insideX(objX) {
+                    return (bulletColisionRangeX1 <= objX && objX  <= ( bulletColisionRangeX1 + 60 ) );
+                }
+
+                function insideY(objY) {
+                    return (bulletColisionRangeY1 <= objY && objY <= ( bulletColisionRangeY1 + 60 ) );
+                }
+
+                var objLength = arrObject.length;
+                for(var i = 0; i < objLength ; i++){
+                    var obj = arrObject[i];
+                    if (insideX(obj.x) && insideY(obj.y)) {
+                        if ((obj.x - obj.width ) <= (this.x + 2) && (this.x - 2) <=  (obj.x + obj.width) && (obj.y - obj.width) <= (this.y + 2) && (this.y - 2) <=  (obj.y + obj.width)) {
+                            this.isDead = true;
+                            obj.isDead = true;
+                        }
+                    }
+                }
+            }
+        };
+        Sprite.call( bullet , p );
+        return bullet;
+    };
+
+    SPACE.bulletType.bigBall = function(p){
+        bullet =  {
+            dx: p.dx,
+            dy: p.dy,
+            range: 250,
+            color: "green",
+            target: p.target,
+            speed: 1.2,
+            colorArray: [ '#003300' , '#006600' , '#009900' , '#00CC00' , '#00FF00' , "#000000"],
+            colorPosition: 0,
+            step: function() {
+                this.x += this.speed * Math.cos( this.angle );
+                this.y += this.speed * Math.sin( this.angle );
+                // it will not float forever...
+                if ( --this.range < 0) {
+                    this.isDead = true;
+                }
+                this.color = this.colorArray[ this.colorPosition ];
+                this.colorPosition++;
+                if( this.colorPosition === this.colorArray.length){
+                    this.colorPosition = 0;
+                }
+            },
+            draw: function(ctx) {
+                ctx.strokeStyle = this.color;
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.arc(0, 0, 30 , 0, Math.PI * 2, false);
+                ctx.stroke();
+            },
+            checkColision: function( arrObject ) {
+                var bulletColisionRangeX1 = this.x - 30;
+                var bulletColisionRangeY1 = this.y - 30;
+
+                function insideX(objX) {
+                    return (bulletColisionRangeX1 <= objX && objX  <= ( bulletColisionRangeX1 + 60 ) );
+                }
+
+                function insideY(objY) {
+                    return (bulletColisionRangeY1 <= objY && objY <= ( bulletColisionRangeY1 + 60 ) );
+                }
+
+                var objLength = arrObject.length;
+                for(var i = 0; i < objLength ; i++){
+                    var obj = arrObject[i];
+                    if (insideX(obj.x) && insideY(obj.y)) {
+                        if ((obj.x - obj.width ) <= (this.x + 25) && (this.x - 25) <=  (obj.x + obj.width) && (obj.y - obj.width) <= (this.y + 25) && (this.y - 25) <=  (obj.y + obj.width)) {
+                            obj.isDead = true;
+                        }
+                    }
+                }
+            }
+        };
+        Sprite.call( bullet , p );
+        return bullet;
+    };
+    
+    function createBullets(){
+        //If math random  bigger than 99.0 will create a bullet type in a random spot of map
+        if( (Math.random() * 10000) > 9990 ){
+            var bulletTypes = [ { type: SPACE.bulletType.laser , color: "red" , border: "yellow" },
+                                { type:  SPACE.bulletType.bigBall , color: "green" , border: "red" } ];
+            var randPos = parseInt( Math.random() * 2  , 0);
+            var randomType = bulletTypes[ randPos ];
+            
+            var box = SPACE.bulletTypeBox( randomType.type , 400 , 300 , randomType.color , randomType.border );
+            objects.push( box );
+
+        }
+    }
+
+    SPACE.bulletTypeBox = function( bulletType , x , y , fillColor , borderCollor){
+        fillColor = fillColor || "red";
+        borderCollor = borderCollor || "yellow";
+        bulletType = bulletType || SPACE.bulletType.default;
+
+        return {
+            bulletType: bulletType,
+            x: x,
+            y: y,
+            width: 10,
+            height: 10,
+            angle: Math.random() * 360 ,
+            liveTime: 10,
+            fillColor: fillColor,
+            borderCollor: borderCollor,
+            draw: function( c ) {
+                if(this.angle > 360){
+                    this.angle = 0;
+                }
+                c.translate( x , y);
+                c.rotate(this.angle);
+                c.beginPath();
+                c.moveTo( this.x,  this.y );
+                c.rect( -5 , -5 , this.width , this.height );
+                c.fillStyle = fillColor;
+                c.fill();
+                c.lineWidth = 1;
+                c.strokeStyle = borderCollor; 
+                c.stroke();
+
+                this.angle += 0.01;
+            },
+            checkColision: function( ship , c) {
+                var boxCollisionRangeX = this.x - 20;
+                var boxCollisionRangeY = this.y - 20;
+
+                function insideX(objX) {
+                    return (boxCollisionRangeX <= objX && objX  <= ( x + 20 ) );
+                }
+
+                function insideY(objY) {               
+                    return (boxCollisionRangeY <= objY && objY <= ( y + 20 ) );
+                }
+
+                if (insideX(ship.x) && insideY(ship.y)) {
+                    ship.bulletType = bulletType;
+                    return true;
+                }
+                return false;
+            }
+        };
+    };
+
+   
 
     // almighty starship
     function Ship(p) {
         Sprite.call(this, p);
         this.openFire = false;
+        this.bulletType = SPACE.bulletType.default;
         this.step = function() {
             // rotate
             var x = player.move.x - this.x;
@@ -184,7 +414,8 @@ window.toskeiraspace = function(){
             }
             if (this.openFire && player.target) {
                 this.openFire = false;
-                bullets.push(makeBullet(this.x, this.y, this.originalAngle, player.target.x, player.target.y, player.target));
+
+                bullets.push(makeBullet( this , player.target ));
             }
         };
         this.draw = function(ctx) {
@@ -203,21 +434,31 @@ window.toskeiraspace = function(){
 
     }
 
-    var ship = new Ship();
-
-    function makeRock() {
-        var rock = new Rock();
-        return rock;
+    function makeBullet(  ship , target ) {
+        return new ship.bulletType ({
+            x : ship.x,
+            y : ship.y,
+            dx : target.x,
+            dy : target.y,
+            angle : ship.originalAngle,
+            target : target
+        });
     }
 
+    var ship = new Ship();
+
     var asteroids = [];
+
     var i = 30;
     while (i--) {
-        asteroids.push(makeRock());
+        asteroids.push( new Rock() );
     }
 
     function step() {
         // cleanup first
+
+        createBullets();
+
         var i = bullets.length;
         var b2 = [];
         while (i--) {
@@ -273,6 +514,16 @@ window.toskeiraspace = function(){
             bullets[i].draw(ctx);
             ctx.restore();
         }
+        i = objects.length;
+        while(i--){
+            ctx.save();
+            if( objects[i].checkColision( ship  , ctx ) ){
+                objects.splice( i , 1);
+            }else{
+                objects[i].draw(ctx);
+            }
+            ctx.restore();
+        }
     }
 
     function click(e) {
@@ -283,6 +534,8 @@ window.toskeiraspace = function(){
             player.click.y = e.clientY - c.offsetTop;
         }
     }
+
+
 
     c.onclick = click;
 
@@ -303,11 +556,12 @@ window.toskeiraspace = function(){
 
     var ctx = c.getContext("2d");
     function mainLoop() {
+        frame += 1;
         step();
         draw(ctx);
-        setTimeout(mainLoop, 5);
     }
-    mainLoop();
+    SPACE.mainLoopInterval = setInterval( mainLoop , 5);
+    //mainLoop();
 };
 
 
